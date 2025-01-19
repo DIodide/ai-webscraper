@@ -7,6 +7,7 @@ const logger = new Logger("puppeteerSetup");
 
 export const getPuppeteerOptions = async () => {
   if (env.NODE_ENV === "development") {
+    // ON LOCAL, USE CHROME/CHROMIUM INSTALLED ON THE MACHINE
     // Try different possible Chrome/Chromium paths
     const possiblePaths = [
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", // System Chrome
@@ -56,6 +57,7 @@ export const getPuppeteerOptions = async () => {
 
     return launchOptions;
   } else {
+    // ON PRODUCTION, DOWNLOAD PUPETEER FROM GITHUB REPO (Next.js is serverless)
     logger.info("Getting executable path for chromium in production");
     const executablePath = await chromium.executablePath(
       `https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar`
